@@ -22,7 +22,7 @@
 
 ## 📂 Project Structure
 BloomingBooks/
-│── Models/ # Book model
-│── ViewModels/ # BooksListViewModel
-│── Views/ # SwiftUI views (BooksList, Favorites, Details)
-│── Assets/ # Colors & images
+├── Models/         # Data models (e.g., Book)
+├── ViewModels/     # State management (BooksListViewModel)
+├── Views/          # SwiftUI views (BookList, Favorites, BookDetail)
+└── Assets/         # Colors, images, and other resources
