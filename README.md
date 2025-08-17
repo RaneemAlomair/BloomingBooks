@@ -26,3 +26,4 @@ BloomingBooks/
 ├── ViewModels/     # State management (BooksListViewModel)
 ├── Views/          # SwiftUI views (BookList, Favorites, BookDetail)
 └── Assets/         # Colors, images, and other resources
+
