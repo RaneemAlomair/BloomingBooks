@@ -15,7 +15,6 @@
 ## 🛠 Tech Stack
 - **Language:** Swift  
 - **Framework:** SwiftUI  
-- **State Management:** `@EnvironmentObject`, `@AppStorage`  
 - **Design:** Custom color assets with light/dark mode  
 
 ---
