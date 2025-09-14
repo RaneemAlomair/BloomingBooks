@@ -11,7 +11,7 @@ import SwiftUI
 struct BloomingBooksApp: App {
     var body: some Scene {
         WindowGroup {
-            RootTabView()
+            SplashScreenView()
         }
     }
 }

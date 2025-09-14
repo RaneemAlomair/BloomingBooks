@@ -4,6 +4,7 @@
 //
 //  Created by Raneem Alomair on 12/02/1447 AH.
 //
+//
 
 import SwiftUI
 
@@ -11,9 +12,9 @@ struct BookDetailView: View {
     var backgroundColor = Color.bloomingBackground
     @ObservedObject var vm: BooksListViewModel
     @AppStorage("isDarkMode") private var isDarkMode = false
-    
+
     let book: Book
-    
+
     var body: some View {
         ZStack {
             backgroundColor.ignoresSafeArea()
@@ -22,32 +23,27 @@ struct BookDetailView: View {
                 VStack(alignment: .leading, spacing: 16) {
 
                     VStack(alignment: .center, spacing: 16) {
-                        Image(book.coverName ?? "")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 140, height: 200)
-                            .clipped()
-                            .cornerRadius(16)
+                       // CoverImageView(coverID: book.coverI)
+                        CoverImageView(url: book.coverURL)
+                            .frame(width: 190, height: 250)
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
                             .shadow(radius: 4)
                             .padding()
                             .padding(.bottom)
-                        
+
                         VStack(alignment: .leading, spacing: 6) {
-                            Text(book.title)
+                            Text(book.title ?? "—")
                                 .font(.title2)
                                 .bold()
                                 .foregroundColor(.bloomingText)
-                                
 
-                            Text(book.author)
+                            Text(book.authorText)
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
 
-                            Text(book.subtitle)
+                            Text(book.yearText)
                                 .font(.headline)
                                 .foregroundColor(.bloomingText)
-                                
-                            
                         }
                         Spacer(minLength: 0)
                     }
@@ -59,9 +55,4 @@ struct BookDetailView: View {
         .navigationTitle("Book Details")
         .navigationBarTitleDisplayMode(.inline)
     }
-}
-
-#Preview {
-    let vm = BooksListViewModel.preview
-    BookDetailView(vm: vm, book: .init(title: "It Ends With Us", author: "Colleen Hoover", subtitle: "A guide to building good habits and breaking bad ones.", coverName: "ItEndWithUs"))
 }

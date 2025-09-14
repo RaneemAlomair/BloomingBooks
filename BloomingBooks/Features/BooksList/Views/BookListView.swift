@@ -7,24 +7,27 @@
 
 import SwiftUI
 
-
 struct BookListView: View {
     var backgroundColor = Color.bloomingBackground
-    
+
     @ObservedObject var vm: BooksListViewModel
     @AppStorage("isDarkMode") var isDarkMode: Bool = false
     
+    private var isInitialLoading: Bool {
+        vm.isLoading && vm.allBooks.isEmpty && vm.errorMessage == nil
+    }
+
     var body: some View {
         NavigationStack {
             ZStack {
                 backgroundColor.ignoresSafeArea()
-                
+
                 VStack(alignment: .leading) {
                     Text("Blooming Books 🌼")
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundColor(.bloomingText)
-                    
+
                     HStack {
                         TextField("Search Books...", text: $vm.searchText)
                             .padding()
@@ -32,7 +35,7 @@ struct BookListView: View {
                             .cornerRadius(10)
                             .foregroundColor(.bloomingText)
                             .font(.headline)
-                        
+
                         Button {
                             withAnimation(.easeInOut) {
                                 isDarkMode.toggle()
@@ -48,64 +51,45 @@ struct BookListView: View {
                                 )
                         }
                     }
-                 //   vm.allBooks
+
                     List {
-                        ForEach(vm.filteredBooks) { book in
+                        ForEach(vm.allBooks) { book in
                             NavigationLink {
                                 BookDetailView(vm: vm, book: book)
                             } label: {
                                 BookRowView(book: book, vm: vm)
                             }
                             .listRowBackground(Color.bloomingBackground)
+                            .onAppear { vm.loadMoreIfNeeded(current: book) }
+                        }
+
+                        if vm.isLoading && !vm.allBooks.isEmpty {
+                            HStack { Spacer(); ProgressView(); Spacer() } // سبنر تحت فقط
+                                .listRowBackground(Color.bloomingBackground)
                         }
                     }
                     .listStyle(.plain)
                     .scrollContentBackground(.hidden)
                     
-                    Spacer()
+                    .overlay(alignment: .center) {
+                        if isInitialLoading {
+                            VStack(spacing: 12) {
+                                ProgressView().scaleEffect(1.3)
+                                Text("Loading books…")
+                                    .font(.headline)
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.top, 8)
+                        }
+                    }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 .padding()
+                
+                ErrorCardView(vm: vm)
+                
             }
         }
         .preferredColorScheme(isDarkMode ? .dark : .light)
     }
 }
-
-
-struct BookRowView: View {
-    let book: Book
-    @ObservedObject var vm: BooksListViewModel
-    
-    var body: some View {
-        HStack(alignment: .top, spacing: 12) {
-            Image((book.coverName ?? ""))
-                .resizable()
-                .frame(width: 80, height: 110)
-                .cornerRadius(15)
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text(book.title)
-                    .font(.headline)
-                    .foregroundColor(.bloomingText)
-                
-                Text(book.author)
-                    .foregroundColor(.gray)
-                
-                Text(book.subtitle)
-                    .font(.caption)
-                    .foregroundColor(.gray)
-            }
-            
-            Button {
-                vm.toggleFavorite(book)
-            } label: {
-                Image(systemName: book.isFavorite ? "heart.fill" : "heart")
-                    .font(.title3)
-                    .foregroundColor(book.isFavorite ? .red : .gray)
-            }
-            .buttonStyle(.plain)
-        }
-    }
-}
-
