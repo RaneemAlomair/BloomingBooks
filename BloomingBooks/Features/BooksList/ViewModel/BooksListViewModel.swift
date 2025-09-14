@@ -28,14 +28,15 @@ class BooksListViewModel: ObservableObject {
     private var offset = 0
     private var total = 0 //العدد الكلي للنتائج من السيرفر (numFound). نستخدمه لمعرفة متى نتوقف عن “Load more”.
     private var currentQuery = ""
-    private let initialQuery: String = "the"// عشان تجيني كتب قبل البحث
+    private let initialQuery: String // عشان تجيني كتب قبل البحث
 
     init(repo: OpenLibraryRepositoryProtocol,
-         favorites: FavoritesStoreProtocol) {
+         favorites: FavoritesStoreProtocol ,
+         initialQuery: String = "") {
         
         self.repo = repo
         self.favorites = favorites
-        //self.initialQuery = initialQuery
+        self.initialQuery = initialQuery
         
         self.favoriteItems = favorites.all()
 

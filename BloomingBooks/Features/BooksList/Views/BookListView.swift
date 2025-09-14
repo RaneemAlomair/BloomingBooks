@@ -53,23 +53,28 @@ struct BookListView: View {
                     }
 
                     List {
-                        ForEach(vm.allBooks) { book in
-                            NavigationLink {
-                                BookDetailView(vm: vm, book: book)
-                            } label: {
-                                BookRowView(book: book, vm: vm)
-                            }
-                            .listRowBackground(Color.bloomingBackground)
-                            .onAppear { vm.loadMoreIfNeeded(current: book) }
-                        }
-
-                        if vm.isLoading && !vm.allBooks.isEmpty {
-                            HStack { Spacer(); ProgressView(); Spacer() } // سبنر تحت فقط
+                        Section {
+                            ForEach(vm.allBooks) { book in
+                                NavigationLink {
+                                    BookDetailView(vm: vm, book: book)
+                                } label: {
+                                    BookRowView(book: book, vm: vm)
+                                }
                                 .listRowBackground(Color.bloomingBackground)
+                                .onAppear { vm.loadMoreIfNeeded(current: book) }
+                            }
+
+                            // loading row (same section)
+                            if vm.isLoading && !vm.allBooks.isEmpty {
+                                HStack { Spacer(); ProgressView(); Spacer() }
+                                    .listRowSeparator(.hidden)                 // شكلياً أنظف
+                                    .listRowBackground(Color.bloomingBackground)
+                            }
                         }
                     }
                     .listStyle(.plain)
                     .scrollContentBackground(.hidden)
+
                     
                     .overlay(alignment: .center) {
                         if isInitialLoading {

@@ -12,11 +12,11 @@ struct RootTabView: View {
     @StateObject private var vm: BooksListViewModel
     @AppStorage("isDarkMode") var isDarkMode: Bool = false
     
-    init() {
+    init(initialQuery: String = "the") {
         let client: NetworkProtocol = Network()
         let repo: OpenLibraryRepositoryProtocol = OpenLibraryRepository(client: client)
         let favorites: FavoritesStoreProtocol = FavoritesStore()
-        _vm = StateObject(wrappedValue: BooksListViewModel(repo: repo, favorites: favorites))
+        _vm = StateObject(wrappedValue: BooksListViewModel(repo: repo, favorites: favorites,initialQuery: initialQuery))
     }
 
     var body: some View {
