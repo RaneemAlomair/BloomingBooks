@@ -67,7 +67,7 @@ struct BookListView: View {
                             // loading row (same section)
                             if vm.isLoading && !vm.allBooks.isEmpty {
                                 HStack { Spacer(); ProgressView(); Spacer() }
-                                    .listRowSeparator(.hidden)                 // شكلياً أنظف
+                                    .listRowSeparator(.hidden)
                                     .listRowBackground(Color.bloomingBackground)
                             }
                         }

@@ -14,7 +14,6 @@ struct OnboardingView: View {
     @State private var step = 0
     @State private var selected = ""
 
-    // label == query (بسيطة)
     private let categories = [
         "Fantasy", "Mystery", "Romance", "Science Fiction",
         "History", "Biography", "Self-Help", "Horror",
@@ -72,7 +71,8 @@ struct OnboardingView: View {
                     // Page 2 — Pick category
                     VStack(spacing: 0) {
                         Text("Choose your favorite category")
-                            .font(.title2).bold()
+                            .font(.title2)
+                            .bold()
                             .padding(.top, 6)
 
                         ScrollView {
@@ -99,7 +99,7 @@ struct OnboardingView: View {
                     }
                     .tag(1)
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never)) // نخفي نقاط النظام
+                .tabViewStyle(.page(indexDisplayMode: .never))
 
                 // نقاط مخصصة
                 HStack(spacing: 8) {
@@ -113,7 +113,6 @@ struct OnboardingView: View {
                 .padding(.bottom, 6)
             }
         }
-        // الفوتر: زر واحد دائمًا في الحافة السفلية (لا يتداخل مع النقاط)
         .safeAreaInset(edge: .bottom) {
             VStack(spacing: 8) {
                 if step == 0 {

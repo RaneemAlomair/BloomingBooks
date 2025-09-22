@@ -31,7 +31,7 @@ struct FavoriteSnapshot: Codable, Identifiable, Hashable {
 
 final class FavoritesStore: FavoritesStoreProtocol  {
    // static let shared = FavoritesStore()
-    private let defaults: UserDefaults //.standard
+    private let defaults: UserDefaults
     private let storageKey = "favorite_book_snapshots"
 
     // نخزّن سنابشوت كاملة

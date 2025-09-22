@@ -9,6 +9,12 @@ import SwiftUI
 
 @main
 struct BloomingBooksApp: App {
+    
+    init() {
+        NotificationManager.instance.configure()
+        NotificationManager.instance.requestAuthIfNeededAndSchedule6h()
+    }
+    
     var body: some Scene {
         WindowGroup {
             SplashScreenView()
